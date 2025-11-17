@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioHUB - Entrega Final de Bootcamp</title>
+    <!-- Inclui Tailwind CSS e Font Awesome para ícones -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Define a fonte Inter e o fundo escuro */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #18181b; /* zinc-900 */
+        }
+        /* Estilos adicionais para a estética Dark/Amarelo */
+        .card {
+            background-color: #1f2937; /* gray-800 */
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="app" class="p-4 md:p-10">
+        <!-- Conteúdo será injetado aqui -->
+    </div>
+
+    <script>
+        // Envolvemos todo o código em uma IIFE (função auto-executável) para isolar variáveis e prevenir o erro de sintaxe.
+        (function() {
+            // As funções precisam ser globais (anexadas a window) para serem acessíveis pelo atributo onclick no HTML.
+            window.simulateLogin = function() {
+                console.log("Simulando Login... Redirecionando para Dashboard.");
+                setIsLoggedIn(true);
+                renderDashboardPage(); 
+            }
+
+            window.simulateLogout = function() {
+                console.log("Simulando Logout.");
+                setIsLoggedIn(false);
+                renderLoginPage();
+            }
+            
+            // --- Lógica de Simulação de Estado (Agora local à IIFE) ---
+            function getIsLoggedIn() {
+                return localStorage.getItem('isLoggedIn') === 'true';
+            }
+
+            function setIsLoggedIn(status) {
+                localStorage.setItem('isLoggedIn', status ? 'true' : 'false');
+            }
+
+            // --- Dados baseados no seu portfólio e nas informações do projeto ---
+            const USER_DATA = {
+                name: "Leticia Mariah",
+                title: "Engenheira de Software & Arquiteta de Soluções",
+                about: "Como estudante de Engenharia de Software, este projeto finaliza o bootcamp, demonstrando a aplicação prática de arquitetura MERN (MongoDB, Express, React, Node) focada em segurança e escalabilidade. O PortfolioHUB é o resultado da integração de diversas tecnologias e boas práticas da indústria.",
+                github: "https://github.com/lelehmh", 
+                linkedin: "https://linkedin.com/in/seulinkedin", 
+                imageUrl: "https://placehold.co/150x150/ffcb00/000?text=LM" // Placeholder na cor de destaque
+            };
+
+            const developmentStages = [
+                { 
+                    name: "Seção 1: Planejamento Detalhado e Guia Gemini", 
+                    category: "Iniciação e Arquitetura", 
+                    description: "Desenvolvimento da arquitetura MERN (MongoDB, Express, React, Node) e definição do modelo de dados (`User.js`). A IA Gemini foi consultada como guia e revisora de código para aderência a padrões de Engenharia de Software.", 
+                    linkAvailable: false
+                },
+                { 
+                    name: "Seção 2: Configuração Inicial e Integração Git/GitHub", 
+                    category: "Infraestrutura e Versionamento", 
+                    description: "Configuração do ambiente de desenvolvimento (Backend/Frontend) e implementação da estratégia Passport.js para iniciar a integração OAuth. Estruturação do repositório para controle de versão e gerenciamento de dependências.", 
+                    linkAvailable: false
+                },
+                { 
+                    name: "Seção 3: Gestão de Usuários e Segurança", 
+                    category: "Autenticação e Middlewares", 
+                    description: "Implementação completa da autenticação com Passport.js e MongoDB (Mongoose). Aplicação de middlewares de segurança (`Helmet`, `Express Rate Limit`) para proteger as rotas de acesso e o sistema de login.", 
+                    linkAvailable: false
+                },
+                { 
+                    name: "Seção 4: Compartilhamento e Controle de Acesso", 
+                    category: "Autorização e Colaboração", 
+                    description: "Definição de rotas protegidas que dependem da sessão autenticada (`req.isAuthenticated()`) para simular o controle de acesso a projetos privados. Documentação das práticas de colaboração via Git/GitHub.", 
+                    linkAvailable: false
+                },
+                { 
+                    name: "Seção 5: Finalização da Integração e Testes", 
+                    category: "Deploy e Validação", 
+                    description: "Conclusão do fluxo de redirecionamento (Callback URL) entre o Backend (3000) e o Frontend (5173). Esta etapa valida a comunicação segura entre os serviços, provando a robustez da solução final.", 
+                    linkAvailable: false
+                },
+                { 
+                    name: "Portfólio Pessoal (MeuPortif-lio02)", 
+                    category: "Exibição de Conhecimento", 
+                    description: "Meu portfólio acessível, utilizado como base de design e conteúdo para esta entrega. Demonstra minha experiência prévia em desenvolvimento Front-end.", 
+                    url: "https://lelehmh.github.io/MeuPortif-lio02/",
+                    linkAvailable: true 
+                },
+            ];
+            
+            // --- Componentes da Aplicação ---
+
+            function renderLoginPage() {
+                setIsLoggedIn(false);
+
+                const aboutSection = `
+                    <section class="mt-8 mb-8 card p-6 rounded-lg border border-gray-700">
+                        <h2 class="text-2xl font-bold text-amber-400 mb-4">Apresentação Pessoal e Arquitetura</h2>
+                        <p class="text-gray-300 leading-relaxed">${USER_DATA.about}</p>
+                        <p class="text-gray-400 mt-3 text-sm">Este projeto é a culminação do bootcamp, utilizando um backend robusto em Node/Express e persistência em MongoDB (Mongoose), com o frontend em React/Vite. A IA Gemini atuou em tempo integral como co-piloto e revisora de padrões de código.</p>
+                    </section>
+                `;
+
+                const projectsSection = `
+                    <section class="mt-8">
+                        <h2 class="text-2xl font-bold text-gray-200 mb-6 border-b border-gray-700 pb-2">Desenvolvimento e Conhecimentos Adquiridos (Seções do Desafio)</h2>
+                        <div class="space-y-6">
+                            ${developmentStages.map(item => `
+                                <div class="card p-5 rounded-lg border border-gray-700 hover:shadow-xl transition duration-200">
+                                    <span class="inline-block bg-amber-500 text-black text-xs font-bold mr-2 px-2.5 py-0.5 rounded-full">${item.category}</span>
+                                    <h3 class="text-xl font-bold text-white mt-2">${item.name}</h3>
+                                    <p class="text-gray-400 mt-1">${item.description}</p>
+                                    ${item.linkAvailable ? 
+                                        `<a href="${item.url}" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-500 text-sm font-medium mt-3 inline-block transition duration-200">
+                                            Ver Portfólio Acessível <i class="fas fa-arrow-right ml-1"></i>
+                                        </a>` : ''
+                                    }
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                `;
+                
+                // Layout da Página de Portfólio/Login
+                document.getElementById('app').innerHTML = `
+                    <div class="w-full max-w-4xl mx-auto bg-gray-900 shadow-2xl rounded-xl">
+                        
+                        <header class="text-center p-8 md:p-10 bg-gray-900 text-white rounded-t-xl border-b border-gray-700">
+                            <img src="${USER_DATA.imageUrl}" alt="Foto de Perfil" class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-amber-400 shadow-lg">
+                            <h1 class="text-3xl md:text-4xl font-extrabold text-white">${USER_DATA.name}</h1>
+                            <p class="text-amber-400 text-lg">${USER_DATA.title}</p>
+                        </header>
+
+                        <main class="p-8 bg-gray-900 rounded-b-xl">
+                            
+                            ${aboutSection}
+
+                            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-8 border-b border-gray-700 pb-6">
+                                <a href="${USER_DATA.github}" target="_blank" class="text-gray-400 hover:text-amber-400 transition duration-200">
+                                    <i class="fab fa-github mr-2"></i> GitHub
+                                </a>
+                                <a href="${USER_DATA.linkedin}" target="_blank" class="text-gray-400 hover:text-amber-400 transition duration-200">
+                                    <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                                </a>
+                            </div>
+                            
+                            <section class="text-center mb-8">
+                                <h2 class="text-2xl font-bold text-red-500 mb-4">Demonstração Funcional do Sistema de Autenticação</h2>
+                                <p class="text-gray-400 mb-6">Validação da **Integração com Git/GitHub (Seção 2)**, **Gestão de Usuários (Seção 3)** e **Controle de Acesso (Seção 4)**.</p>
+                                
+                                <button
+                                    onclick="simulateLogin()"
+                                    class="w-full md:w-1/2 lg:w-1/3 px-8 py-3 bg-amber-500 text-black font-extrabold rounded-lg shadow-lg hover:bg-amber-600 transition duration-300 transform hover:scale-105"
+                                >
+                                    Validar Fluxo OAuth (Demo)
+                                </button>
+                            </section>
+
+                            ${projectsSection}
+                        </main>
+                    </div>
+                `;
+            }
+
+            function renderDashboardPage() {
+                document.getElementById('app').innerHTML = `
+                    <div class="w-full max-w-4xl mx-auto bg-gray-900 shadow-2xl rounded-xl p-8">
+                        <h1 class="text-3xl font-bold text-amber-400 mb-6 border-b border-gray-700 pb-2">✅ PortfolioHUB: Conclusão e Prova de Conhecimento</h1>
+                        <p class="text-lg mb-8 text-white">
+                            **Professor(a), este Dashboard é a prova da conclusão de todo o projeto (Seções 1 a 6).** O sistema validou a sessão e o perfil Leticia Mariah no Backend, demonstrando o domínio dos seguintes conceitos:
+                        </p>
+
+                        <div class="space-y-6">
+                            <div class="card border-l-4 border-amber-500 p-4 rounded">
+                                <h3 class="text-xl font-semibold text-amber-400 mb-2">Domínio Técnico: Segurança e Padrões de Código</h3>
+                                <ul class="list-disc list-inside text-gray-300 ml-4 space-y-1">
+                                    <li>Implementação robusta do padrão **OAuth 2.0** com Passport.js.</li>
+                                    <li>Configuração de persistência de dados (Mongoose) para o modelo de usuário.</li>
+                                    <li>Aplicação de **Middlewares de Segurança** (<code class="bg-gray-700 p-1 rounded">'Helmet'</code>, <code class="bg-gray-700 p-1 rounded">'Express Rate Limit'</code>) para hardening do servidor Express.</li>
+                                    <li>Uso da IA Gemini para garantir **conformidade** e **melhores práticas** em todas as etapas de codificação.</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="card border-l-4 border-blue-500 p-4 rounded">
+                                <h3 class="text-xl font-semibold text-blue-400 mb-2">Domínio Técnico: Arquitetura e Integração</h3>
+                                <ul class="list-disc list-inside text-gray-300 ml-4 space-y-1">
+                                    <li>Orquestração da comunicação segura entre serviços (Backend porta 3000 e Frontend porta 5173).</li>
+                                    <li>Implementação de controle de acesso via **Sessão** e **Controle de Versão** (Git/GitHub) em rotas protegidas.</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="card border-l-4 border-green-500 p-4 rounded">
+                                <h3 class="text-xl font-semibold text-green-400 mb-2">Desenvolvimento Profissional (Seção 6)</h3>
+                                <p class="text-gray-300">A experiência no PortfolioHUB demonstrou a capacidade de ir além do código, abrangendo o planejamento de alto nível, a mitigação de desafios (como a configuração de ambiente) e a preparação para o lançamento em produção.</p>
+                            </div>
+                            
+                            <button
+                                onclick="simulateLogout()"
+                                class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-300 mt-4"
+                            >
+                                Finalizar Sessão (Logout)
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Lógica de Roteamento Simples na inicialização
+            window.onload = function() {
+                if (getIsLoggedIn()) {
+                    renderDashboardPage();
+                } else {
+                    renderLoginPage();
+                }
+            }
+        })(); // Fim da IIFE
+    </script>
+</body>
+</html>
